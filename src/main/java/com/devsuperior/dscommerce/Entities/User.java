@@ -1,4 +1,4 @@
-package com.devsuperior.dscommerce.Entities;
+package com.devsuperior.dscommerce.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
