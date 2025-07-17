@@ -12,6 +12,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Table(name = "tb_roles")
 public class Role implements GrantedAuthority {
 
     @Id

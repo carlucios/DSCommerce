@@ -13,6 +13,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Table(name = "tb_users")
 public class User {
 
     @Id
@@ -36,7 +37,7 @@ public class User {
 
     @NotBlank(message = "Campo obrigatório")
     @Past(message = "Data de nascimento deve ser anterior à data atual")
-    private String birthDate;
+    private LocalDate birthDate;
 
     @ManyToMany
     @JoinTable(
