@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
-import java.time.LocalDate;
+import java.time.Instant;
 import java.util.Collection;
 import java.util.Set;
 
@@ -12,7 +12,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -38,9 +39,9 @@ public class User implements UserDetails {
     @Size(min = 6, message = "A senha deve ter pelo menos 6 caracteres")
     private String password;
 
-    @NotBlank(message = "Campo obrigatório")
+    @NotNull(message = "Campo obrigatório")
     @Past(message = "Data de nascimento deve ser anterior à data atual")
-    private LocalDate birthDate;
+    private Instant birthDate;
 
     @ManyToMany
     @JoinTable(
@@ -75,5 +76,25 @@ public class User implements UserDetails {
     @Override
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }
