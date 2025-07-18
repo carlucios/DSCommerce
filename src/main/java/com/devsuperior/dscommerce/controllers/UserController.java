@@ -3,6 +3,7 @@ package com.devsuperior.dscommerce.controllers;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -20,9 +21,9 @@ public class UserController {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_OPERATOR')")
     @GetMapping("/me")
-    public UserDTO getMe() {
+    public ResponseEntity<UserDTO> getMe() {
         User user = userService.authenticated();
-        return new UserDTO(user);
+        return ResponseEntity.ok(new UserDTO(user));
     }
     
 }
