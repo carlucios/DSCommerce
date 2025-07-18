@@ -1,5 +1,7 @@
 package com.devsuperior.dscommerce.entities;
 
+import java.time.Instant;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,7 +18,7 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String moment;
+    private Instant moment;
 
     @OneToOne
     @MapsId

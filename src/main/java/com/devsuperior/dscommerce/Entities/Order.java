@@ -21,6 +21,9 @@ public class Order {
 
     private Instant moment;
 
+    @Enumerated(EnumType.ORDINAL)
+    private OrderStatus status;
+
     @ManyToOne
     @JoinColumn(name = "client_id")
     private User client;
