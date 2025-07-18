@@ -19,3 +19,49 @@ CREATE TABLE tb_user_role (
     FOREIGN KEY (user_id) REFERENCES tb_users(id),
     FOREIGN KEY (role_id) REFERENCES tb_roles(id)
 );
+
+CREATE TABLE tb_categories (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE tb_products (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    price NUMERIC(10,2) NOT NULL,
+    description TEXT,
+    img_url TEXT
+);
+
+CREATE TABLE tb_product_category (
+    product_id INT NOT NULL,
+    category_id INT NOT NULL,
+    PRIMARY KEY (product_id, category_id),
+    FOREIGN KEY (product_id) REFERENCES tb_products(id),
+    FOREIGN KEY (category_id) REFERENCES tb_categories(id)
+);
+
+CREATE TABLE tb_orders (
+    id SERIAL PRIMARY KEY,
+    moment TIMESTAMP WITH TIME ZONE NOT NULL,
+    status INT NOT NULL,
+    client_id INT NOT NULL,
+    FOREIGN KEY (client_id) REFERENCES tb_users(id)
+);
+
+CREATE TABLE tb_order_item (
+    order_id INT NOT NULL,
+    product_id INT NOT NULL,
+    quantity INT NOT NULL,
+    price NUMERIC(10,2) NOT NULL,
+    PRIMARY KEY (order_id, product_id),
+    FOREIGN KEY (order_id) REFERENCES tb_orders(id),
+    FOREIGN KEY (product_id) REFERENCES tb_products(id)
+);
+
+CREATE TABLE tb_payments (
+    order_id INT PRIMARY KEY,
+    moment TIMESTAMP WITH TIME ZONE NOT NULL,
+    FOREIGN KEY (order_id) REFERENCES tb_orders(id)
+);
+
