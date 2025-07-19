@@ -1,6 +1,5 @@
 package com.devsuperior.dscommerce.dto;
 
-import com.devsuperior.dscommerce.entities.Category;
 import lombok.Builder;
 import lombok.Data;
 
@@ -16,6 +15,6 @@ public class ProductDTO {
     private String imgUrl;
     private String description;
 
-    private Set<String> categories;
+    private Set<CategoryDTO> categories;
 
 }

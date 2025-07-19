@@ -38,5 +38,26 @@ public class ProductService {
 
         return mapper.toDto(product);
     }
-    
+
+    @Transactional
+    public ProductDTO insert(ProductDTO dto) {
+        Product entity = mapper.toEntity(dto);
+        entity = repository.save(entity);
+        return mapper.toDto(entity);
+    }
+
+    @Transactional
+    public ProductDTO update(Long id, ProductDTO dto) {
+        try {
+            Product entity = repository.getReferenceById(id);
+            mapper.update(dto, entity);
+
+            return mapper.toDto(repository.save(entity));
+        } catch (EntityNotFoundException e) {
+            throw new EntityNotFoundException("Product not found: " + id);
+        }
+    }
+
+    public void delete(Long id) {
+    }
 }
