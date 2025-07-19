@@ -26,10 +26,13 @@ public class Product {
 
     private String imgUrl;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "tb_product_category",
                joinColumns = @JoinColumn(name = "product_id"),
                inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories;
+
+    @OneToMany(mappedBy = "id.product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<OrderItem> items;
 
 }
