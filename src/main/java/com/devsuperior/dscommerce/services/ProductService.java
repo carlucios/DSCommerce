@@ -37,7 +37,7 @@ public class ProductService {
     @Transactional(readOnly = true)
     public ProductDTO findById(Long id) {
         Product product = repository.findWithCategoriesById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("Product not found: " + id));
+            .orElseThrow(() -> new ResourceNotFoundException("Produto não encontrado"));
 
         return mapper.toDto(product);
     }
@@ -57,7 +57,7 @@ public class ProductService {
 
             return mapper.toDto(repository.save(entity));
         } catch (ResourceNotFoundException e) {
-            throw new ResourceNotFoundException("Product not found: " + id);
+            throw new ResourceNotFoundException("Produto não encontrado");
         }
     }
 
@@ -67,9 +67,9 @@ public class ProductService {
             Product entity = repository.getReferenceById(id);
             repository.delete(entity);
         } catch (JpaObjectRetrievalFailureException e) {
-            throw new ResourceNotFoundException("Product not found: " + id);
+            throw new ResourceNotFoundException("Produto não encontrado");
         } catch (DataIntegrityViolationException e) {
-            throw new DatabaseException("Integrity violation - cannot delete product: " + id);
+            throw new DatabaseException("Violação de Integridade - não pode deletar produto");
         }
     }
 }

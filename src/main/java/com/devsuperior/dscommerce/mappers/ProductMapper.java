@@ -28,7 +28,7 @@ public interface ProductMapper {
     default Set<CategoryDTO> mapCategoriesToDtos(Set<Category> categories) {
         return categories == null ? Collections.emptySet() :
                 categories.stream().map(entity -> {
-                    return new CategoryDTO(entity.getId());
+                    return new CategoryDTO(entity.getId(), entity.getName());
                 }).collect(Collectors.toSet());
     }
 

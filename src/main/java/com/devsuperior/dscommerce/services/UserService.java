@@ -28,7 +28,7 @@ public class UserService implements UserDetailsService {
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return repository.findWithRolesByEmail(username)
-            .orElseThrow(() -> new UsernameNotFoundException("usuário não encontrado: " + username));
+            .orElseThrow(() -> new UsernameNotFoundException("usuário não encontrado"));
     }
 
     @Transactional(readOnly = true)
@@ -38,7 +38,7 @@ public class UserService implements UserDetailsService {
         String username = jwtPrincipal.getClaim("username");
         
         User user = repository.findWithRolesByEmail(username)
-            .orElseThrow(() -> new UsernameNotFoundException("usuário não encontrado: " + username));
+            .orElseThrow(() -> new UsernameNotFoundException("usuário não encontrado"));
 
         return mapper.toDto(user);
     }
