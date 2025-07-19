@@ -31,14 +31,14 @@ public class ProductController {
 
     @GetMapping
     public ResponseEntity<Page<MinProductDTO>> findAll(Pageable pageable) {
-        Page<Product> page = productService.findAll(pageable);
-        return ResponseEntity.ok(page.map(product -> new MinProductDTO(product)));
+        Page<MinProductDTO> page = productService.findAll(pageable);
+        return ResponseEntity.ok(page);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ProductDTO> findById(@PathVariable Long id) {
-        Product product = productService.findById(id);
-        return ResponseEntity.ok(new ProductDTO(product));
+        ProductDTO dto = productService.findById(id);
+        return ResponseEntity.ok(dto);
     }
 
 /*     @PreAuthorize("hasRole('ROLE_ADMIN')")

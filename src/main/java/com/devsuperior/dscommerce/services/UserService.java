@@ -1,7 +1,7 @@
 package com.devsuperior.dscommerce.services;
 
-import java.security.Security;
-
+import com.devsuperior.dscommerce.dto.UserDTO;
+import com.devsuperior.dscommerce.mappers.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.security.core.Authentication;
@@ -19,23 +19,28 @@ import com.devsuperior.dscommerce.repositories.UserRepository;
 public class UserService implements UserDetailsService {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserRepository repository;
+
+    @Autowired
+    private UserMapper mapper;
 
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findWithRolesByEmail(username)
+        return repository.findWithRolesByEmail(username)
             .orElseThrow(() -> new UsernameNotFoundException("usuário não encontrado: " + username));
     }
 
     @Transactional(readOnly = true)
-    public User authenticated() throws UsernameNotFoundException {
+    public UserDTO authenticated() throws UsernameNotFoundException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Jwt jwtPrincipal = (Jwt) authentication.getPrincipal();
         String username = jwtPrincipal.getClaim("username");
         
-        return userRepository.findWithRolesByEmail(username)
+        User user = repository.findWithRolesByEmail(username)
             .orElseThrow(() -> new UsernameNotFoundException("usuário não encontrado: " + username));
+
+        return mapper.toDto(user);
     }
     
 }

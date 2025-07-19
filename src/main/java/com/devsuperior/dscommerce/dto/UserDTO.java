@@ -5,10 +5,11 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.devsuperior.dscommerce.entities.User;
-
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 public class UserDTO {
 
     private Long id;
@@ -19,12 +20,4 @@ public class UserDTO {
 
     private Set<String> roles;
 
-    public UserDTO(User entity) {
-        this.id = entity.getId();
-        this.name = entity.getName();
-        this.email = entity.getEmail();
-        this.phone = entity.getPhone();
-        this.birthDate = entity.getBirthDate();
-        this.roles = entity.getRoles().stream().map(role -> role.getAuthority()).collect(Collectors.toSet());
-    }
 }

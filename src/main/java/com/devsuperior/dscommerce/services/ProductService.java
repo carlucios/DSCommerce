@@ -1,5 +1,8 @@
 package com.devsuperior.dscommerce.services;
 
+import com.devsuperior.dscommerce.dto.MinProductDTO;
+import com.devsuperior.dscommerce.dto.ProductDTO;
+import com.devsuperior.dscommerce.mappers.ProductMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,18 +19,24 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProductService {
 
     @Autowired
-    private ProductRepository productRepository;
+    private ProductRepository repository;
+
+    @Autowired
+    private ProductMapper mapper;
 
     @Transactional(readOnly = true)
-    public Page<Product> findAll(Pageable pageable) {
-        return productRepository.findAllBy(pageable);
+    public Page<MinProductDTO> findAll(Pageable pageable) {
+        Page<Product> page = repository.findAllBy(pageable);
+
+        return page.map(product -> mapper.toMinDto(product));
     }
 
     @Transactional(readOnly = true)
-    public Product findById(Long id) {
-        Product product = productRepository.findWithCategoriesById(id)
+    public ProductDTO findById(Long id) {
+        Product product = repository.findWithCategoriesById(id)
             .orElseThrow(() -> new EntityNotFoundException("Product not found: " + id));
-        return product;
+
+        return mapper.toDto(product);
     }
     
 }

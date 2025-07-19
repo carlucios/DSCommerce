@@ -22,8 +22,8 @@ public class UserController {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_OPERATOR')")
     @GetMapping("/me")
     public ResponseEntity<UserDTO> getMe() {
-        User user = userService.authenticated();
-        return ResponseEntity.ok(new UserDTO(user));
+        UserDTO dto = userService.authenticated();
+        return ResponseEntity.ok(dto);
     }
     
 }
