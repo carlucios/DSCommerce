@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
 
@@ -20,6 +21,7 @@ public class CategoryService {
     @Autowired
     CategoryMapper mapper;
 
+    @Transactional(readOnly = true)
     public Page<CategoryDTO> findAll(Pageable pageable) {
         Page<Category> categories = repository.findAll(pageable);
         return categories.map(category -> mapper.toDto(category));
