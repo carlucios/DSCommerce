@@ -1,5 +1,6 @@
 package com.devsuperior.dscommerce.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,13 +27,14 @@ public class Product {
 
     private String imgUrl;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(cascade =  CascadeType.MERGE)
     @JoinTable(name = "tb_product_category",
                joinColumns = @JoinColumn(name = "product_id"),
                inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories;
 
     @OneToMany(mappedBy = "id.product", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private Set<OrderItem> items;
 
 }
