@@ -15,11 +15,9 @@ import lombok.RequiredArgsConstructor;
 import com.devsuperior.dscommerce.services.ProductService;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Min;
 
 import com.devsuperior.dscommerce.dto.MinProductDTO;
 import com.devsuperior.dscommerce.dto.ProductDTO;
-import com.devsuperior.dscommerce.entities.Product;
 
 @RestController
 @RequestMapping(value = "/products")

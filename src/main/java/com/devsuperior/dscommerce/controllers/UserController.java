@@ -8,7 +8,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.devsuperior.dscommerce.dto.UserDTO;
-import com.devsuperior.dscommerce.entities.User;
 import com.devsuperior.dscommerce.services.UserService;
 
 
@@ -19,7 +18,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_OPERATOR')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_CLIENT')")
     @GetMapping("/me")
     public ResponseEntity<UserDTO> getMe() {
         UserDTO dto = userService.authenticated();
