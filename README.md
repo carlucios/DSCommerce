@@ -108,30 +108,6 @@ src/main/resources/db/migration
 
 ---
 
-## 📦 Docker Compose
-
-`docker-compose.yml` inclui o serviço de banco de dados PostgreSQL:
-
-```yaml
-services:
-  postgres:
-    image: postgres
-    container_name: pg-dscommerce
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: dscommerce
-    ports:
-      - "5433:5432"
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-
-volumes:
-  pgdata:
-```
-
----
-
 ## 🧑‍💻 Autor
 
 Desenvolvido por Carlúcio Santos.
