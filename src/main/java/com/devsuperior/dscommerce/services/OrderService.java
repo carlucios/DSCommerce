@@ -12,6 +12,7 @@ import com.devsuperior.dscommerce.mappers.OrderMapper;
 import com.devsuperior.dscommerce.mappers.UserMapper;
 import com.devsuperior.dscommerce.repositories.OrderRepository;
 import com.devsuperior.dscommerce.repositories.ProductRepository;
+import com.devsuperior.dscommerce.services.exceptions.ForbiddenException;
 import com.devsuperior.dscommerce.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,9 @@ public class OrderService {
     UserService userService;
 
     @Autowired
+    AuthService authService;
+
+    @Autowired
     UserMapper userMapper;
 
     @Transactional(readOnly = true)
@@ -42,12 +46,9 @@ public class OrderService {
         Order entity = orderRepository.findWithItemsById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Produto não encontrado"));
 
-        System.out.println("Order Items: " + entity.getItems());
+        authService.validateSelfOrAdmin(entity.getClient().getId());
 
-        OrderDTO dto = orderMapper.toDto(entity);
-        System.out.println("OrderDTO Items: " + dto.getItems());
-
-        return dto;
+        return orderMapper.toDto(entity);
     }
 
     @Transactional
